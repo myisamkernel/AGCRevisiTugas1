@@ -8,6 +8,8 @@ public class BumperControllerWithColor : MonoBehaviour {
     public Collider bola;
     private Renderer renderer;
 
+    public AudioManager audioManager;
+    public VFXManager VFXManager;
 
     private void Start()
     {
@@ -25,6 +27,8 @@ public class BumperControllerWithColor : MonoBehaviour {
         {
             // kita lakukan debug
             Debug.Log("Kena Bola");
+            audioManager.PlaySFX(collision.transform.position);
+            VFXManager.PlayVFX(collision.transform.position);
         }
     }
 }

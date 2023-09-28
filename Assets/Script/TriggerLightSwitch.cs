@@ -18,6 +18,9 @@ public class TriggerLightSwitch : MonoBehaviour
     private SwitchState state;
     private Renderer renderer;
 
+    public AudioManager audioManager;
+    public VFXManager VFXManager;
+
     private void Start()
     {
         renderer = GetComponent<Renderer>();
@@ -31,7 +34,8 @@ public class TriggerLightSwitch : MonoBehaviour
     {
         if (other == bola)
         {
-            Toggle();
+            
+            Toggle(other);
         }
     }
 
@@ -51,16 +55,22 @@ public class TriggerLightSwitch : MonoBehaviour
         }
     }
 
-    private void Toggle()
+    private void Toggle(Collider other)
     {
+        Vector3 position = other.ClosestPointOnBounds(transform.position);
+
         if (state == SwitchState.On)
         {
             Set(false);
         }
         else
         {
+            VFXManager.PlayVFX(position);
             Set(true);
         }
+        
+        audioManager.PlaySFX(position);
+
     }
 
     private IEnumerator Blink(int times)
